@@ -8,6 +8,7 @@ export const HeaderContainer = styled.div`
   flex-direction: column;
   align-items: center;
   background: url(${bgCover});
+  background-position: center;
   background-clip: content-box;
   background-size: cover;
 

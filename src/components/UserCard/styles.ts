@@ -11,6 +11,7 @@ export const UserCardContainer = styled.div`
 
   img {
     border-radius: 8px;
+    max-width: 148px;
   }
 `
 

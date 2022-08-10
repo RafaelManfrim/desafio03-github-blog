@@ -5,7 +5,7 @@ import { UserCardContainer, UserInfoContainer, UserNameContainer, UserInfoConten
 export function UserCard() {
   return (
     <UserCardContainer>
-      <img src="https://images.unsplash.com/photo-1556830609-6eb291676a5d?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=148&q=80" alt="" />
+      <img src="http://github.com/rafaelmanfrim.png" alt="" />
       <UserInfoContainer>
         <UserNameContainer>
           <strong>Rafael Manfrim</strong>
