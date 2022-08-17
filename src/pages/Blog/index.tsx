@@ -1,47 +1,90 @@
+import { useEffect, useState } from "react";
+import { formatDistanceToNow } from "date-fns";
+import { ptBR } from "date-fns/locale";
+import axios from "axios";
+
 import { UserCard } from "../../components/UserCard";
 
+import { TitleContainer, FetchPostsInput, PostCard, PostsContainer } from "./styles";
+
+interface Post {
+  id: number;
+  title: string;
+  created_at: string;
+  body: string;
+}
+
+interface User {
+  name: string;
+  bio: string;
+  followers: number;
+  company: string;
+  login: string;
+  avatar_url: string;
+  html_url: string;
+}
+
 export function Blog() {
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+
+  async function fetchPosts() {
+    try {
+      const response = await axios.get(`https://api.github.com/search/issues?q=${''}repo:rafaelmanfrim/desafio03-github-blog`)
+      setPosts(response.data.items);
+    } catch (error) {
+      console.log(error);
+    }
+
+    setLoading(false);
+  }
+
+  async function fetchUser() {
+    setLoading(true);
+    try {
+      const response = await axios.get(`https://api.github.com/users/rafaelmanfrim`);
+      const { name, bio, avatar_url, login, company, followers, html_url } = response.data;
+      setUser({ name, bio, avatar_url, login, company, followers, html_url });
+    } catch (error) {
+      console.log(error);
+    }
+    fetchPosts();
+  }
+
+  useEffect(() => {
+    fetchUser();
+  }, []);
+
+  if (loading) {
+    return <div>Loading...</div>
+  }
+
   return (
     <>
-      <UserCard />
+      <UserCard {...user!} />
       <div>
-        <div>
+        <TitleContainer>
           <h3>Publicações</h3>
-          <span>6 Publicações</span>
-        </div>
-        <input type="text" placeholder="Buscar conteúdo" />
-        <div>
-          <div>
-            <div>
-              <strong>Título da Publicação</strong>
-              <time>Há 1 dia</time>
-            </div>
-            <p>
-              Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in
-              JavaScript, and to explain their differences from other languages.
-            </p>
-          </div>
-          <div>
-            <div>
-              <strong>Título da Publicação</strong>
-              <time>Há 1 dia</time>
-            </div>
-            <p>
-              Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in
-              JavaScript, and to explain their differences from other languages.
-            </p>
-          </div>
-          <div>
-            <div>
-              <strong>Título da Publicação</strong>
-              <time>Há 1 dia</time>
-            </div>
-            <p>
-              Programming languages all have built-in data structures, but these often differ from one language to another. This article attempts to list the built-in data structures available in
-              JavaScript, and to explain their differences from other languages.
-            </p>
-          </div>
-        </div>
+          <span>{posts.length} Publicações</span>
+        </TitleContainer>
+        <FetchPostsInput type="text" placeholder="Buscar conteúdo" />
+        <PostsContainer>
+          {posts.map((post: Post) => (
+            <PostCard key={post.id}>
+              <div>
+                <strong>{post.title}</strong>
+                <time>
+                  {formatDistanceToNow(new Date(post.created_at), {
+                    locale: ptBR,
+                    addSuffix: true,
+                  })}
+                </time>
+              </div>
+              <p>{post.body}</p>
+            </PostCard>
+          ))}
+        </PostsContainer>
       </div>
     </>
   );

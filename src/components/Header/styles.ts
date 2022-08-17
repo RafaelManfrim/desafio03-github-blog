@@ -13,6 +13,6 @@ export const HeaderContainer = styled.div`
   background-size: cover;
 
   img {
-    padding: 4rem 4rem 8rem;
+    padding: 2rem 4rem 8rem;
   }
 `

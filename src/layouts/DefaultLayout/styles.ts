@@ -9,7 +9,7 @@ export const DefaultLayoutContainer = styled.div`
   align-items: center;
 
   main {
-    margin-top: -4rem;
+    margin-top: -6rem;
     max-width: 1024px;
     padding: 0 2rem;
   }

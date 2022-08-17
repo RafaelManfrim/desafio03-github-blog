@@ -2,29 +2,40 @@ import { FaGithub, FaBuilding, FaUserFriends, FaExternalLinkAlt } from "react-ic
 
 import { UserCardContainer, UserInfoContainer, UserNameContainer, UserInfoContent } from "./styles";
 
-export function UserCard() {
+interface UserCardProps {
+  name: string;
+  login: string;
+  avatar_url: string;
+  company: string;
+  followers: number;
+  bio: string;
+  html_url: string;
+}
+
+export function UserCard({ name, login, avatar_url, company, followers, bio, html_url }: UserCardProps) {
   return (
     <UserCardContainer>
-      <img src="http://github.com/rafaelmanfrim.png" alt="" />
+      <img src={avatar_url} alt="" />
       <UserInfoContainer>
         <UserNameContainer>
-          <strong>Rafael Manfrim</strong>
-          <a href="http://github.com/rafaelmanfrim" target="_blank">
+          <strong>{name}</strong>
+          <a href={html_url} target="_blank">
             GITHUB <FaExternalLinkAlt />
           </a>
         </UserNameContainer>
-        <p>Tristique volutpat pulvinar vel massa, pellentesque egestas. Eu viverra massa quam dignissim aenean malesuada suscipit. Nunc, volutpat pulvinar vel mass.</p>
-
+        <p>{bio}</p>
         <UserInfoContent>
           <span>
-            <FaGithub /> RafaelManfrim
+            <FaGithub /> {login}
           </span>
           <span>
-            <FaBuilding /> Rocketseat
+            <FaBuilding /> {company}
           </span>
-          <span>
-            <FaUserFriends /> 32 seguidores
-          </span>
+          {followers > 0 && (
+            <span>
+              <FaUserFriends /> {followers} {followers === 1 ? "seguidor" : "seguidores"}
+            </span>
+          )}
         </UserInfoContent>
       </UserInfoContainer>
     </UserCardContainer>

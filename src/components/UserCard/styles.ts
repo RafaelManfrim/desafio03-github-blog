@@ -19,6 +19,7 @@ export const UserInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex: 1;
 
   > p {
     line-height: 160%;
