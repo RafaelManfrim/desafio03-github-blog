@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 export const TitleContainer = styled.div`
@@ -45,13 +46,13 @@ export const PostsContainer = styled.div`
   padding-bottom: 4rem;
 `
 
-export const PostCard = styled.div`
+export const PostCard = styled(Link)`
   height: 16.25rem;
   border-radius: 10px;
   background-color: ${({ theme }) => theme.colors["base-post"]};
   border: 2px solid ${({ theme }) => theme.colors["base-post"]};
   padding: 2rem;
-
+  text-decoration: none;
   transition: 0.2s;
 
   &:hover {

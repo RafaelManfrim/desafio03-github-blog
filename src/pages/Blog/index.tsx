@@ -12,6 +12,7 @@ interface Post {
   title: string;
   created_at: string;
   body: string;
+  number: number;
 }
 
 interface User {
@@ -82,7 +83,7 @@ export function Blog() {
         />
         <PostsContainer>
           {posts.map((post: Post) => (
-            <PostCard key={post.id}>
+            <PostCard key={post.id} to={`/post/${post.number}`}>
               <div>
                 <strong>{post.title}</strong>
                 <time>
