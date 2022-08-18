@@ -28,10 +28,11 @@ export function Blog() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
   const [user, setUser] = useState<User | null>(null);
+  const [search, setSearch] = useState('')
 
   async function fetchPosts() {
     try {
-      const response = await axios.get(`https://api.github.com/search/issues?q=${''}repo:rafaelmanfrim/desafio03-github-blog`)
+      const response = await axios.get(`https://api.github.com/search/issues?q=${search}%20repo:rafaelmanfrim/desafio03-github-blog`)
       setPosts(response.data.items);
     } catch (error) {
       console.log(error);
@@ -68,7 +69,17 @@ export function Blog() {
           <h3>Publicações</h3>
           <span>{posts.length} Publicações</span>
         </TitleContainer>
-        <FetchPostsInput type="text" placeholder="Buscar conteúdo" />
+        <FetchPostsInput
+          type="text"
+          placeholder="Buscar conteúdo"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              fetchPosts();
+            }
+          }}
+        />
         <PostsContainer>
           {posts.map((post: Post) => (
             <PostCard key={post.id}>

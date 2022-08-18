@@ -10,6 +10,7 @@ export const DefaultLayoutContainer = styled.div`
 
   main {
     margin-top: -6rem;
+    width: 100%;
     max-width: 1024px;
     padding: 0 2rem;
   }
